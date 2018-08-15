@@ -5,15 +5,21 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     EditText nameEditText, emailEditText, phoneEditText, cellEditText, messageEditText;
+    Spinner spinner;
+    AutoCompleteTextView autoCompleteTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +29,20 @@ public class MainActivity extends AppCompatActivity {
         phoneEditText = findViewById(R.id.main_phoneEditText);
         cellEditText = findViewById(R.id.main_cellEditText);
         messageEditText = findViewById(R.id.main_messageEditText);
+        spinner = findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(MainActivity.this,
+                R.array.occupations, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        autoCompleteTextView = findViewById(R.id.autocompleteTextView);
+
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(MainActivity.this,
+                R.array.states, android.R.layout.simple_list_item_1);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        autoCompleteTextView.setAdapter(adapter2);
+
+
+
     }
 
     public void buttonPressed(View view) {
@@ -33,6 +53,10 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("cell",cellEditText.getText().toString());
         intent.putExtra("phone",phoneEditText.getText().toString());
         intent.putExtra("message",messageEditText.getText().toString());
+        String selectedState =autoCompleteTextView.getText().toString();
+        String selectedOccupation = (String)(spinner.getSelectedItem());
+        Log.d("debug", "Selected state is "+selectedState);
+        Log.d("debug", "Selected occupation is "+selectedOccupation);
         startActivity(intent);
     }
 
@@ -40,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.menu_about_us:
-
                 Intent intent = new Intent(MainActivity.this, WebActivity.class);
                 startActivity(intent);
                 break;

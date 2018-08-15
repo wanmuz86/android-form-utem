@@ -24,6 +24,7 @@ public class SecondActivity extends AppCompatActivity {
         String phoneValue = intent.getStringExtra("phone");
         String cellValue = intent.getStringExtra("cell");
         String messageValue = intent.getStringExtra("message");
+
         nameTextView.setText(nameValue);
         emailTextView.setText(emailValue);
         phoneTextView.setText(phoneValue);
